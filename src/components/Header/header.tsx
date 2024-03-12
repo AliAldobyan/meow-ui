@@ -12,46 +12,46 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { UserButton, useAuth } from "@clerk/nextjs";
+import { toggle } from "@/redux/features/headerSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { useAppSelector } from "@/redux/store";
+import Link from "next/link";
 
-const pages = ["Galleroy", "Breeds", "Vote", "Likes"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ["Voting", "Breeds", "Favorites"];
 
-function Header() {
-  const { isLoaded, isSignedIn, user } = useUser();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+const Header: React.FC = () => {
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-    console.log("event.currentTarget", event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
+  const dispatch = useDispatch<AppDispatch>();
+  const anchorElNav = useAppSelector((state) => state.header.isOpen);
+
+  const handleOpenNavMenu = () => {
+    dispatch(toggle());
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    dispatch(toggle());
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#01579b" }}>
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: "transparent", color: "black" }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <PetsIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+
           <Typography
             variant="h6"
             noWrap
             component="a"
-            //href=""
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "lato, sans-serif",
+              // fontFamily: "lato, sans-serif",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
@@ -60,7 +60,8 @@ function Header() {
           >
             MEOW UI
           </Typography>
-          {isSignedIn && isLoaded ? (
+
+          {userId ? (
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -74,9 +75,10 @@ function Header() {
               </IconButton>
               <Menu
                 id="menu-appbar"
-                anchorEl={anchorElNav}
+                // anchorEl={anchorElNav}
+                // anchorEl={anchorElNav ? anchorElNav : null}
                 anchorOrigin={{
-                  vertical: "bottom",
+                  vertical: "top",
                   horizontal: "left",
                 }}
                 keepMounted
@@ -88,11 +90,17 @@ function Header() {
                 onClose={handleCloseNavMenu}
                 sx={{
                   display: { xs: "block", md: "none" },
+                  mt: 6,
                 }}
               >
                 {pages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                    <Link
+                      href={userId ? `/${page.toLowerCase()}` : "/"}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Typography textAlign="center">{page}</Typography>
+                    </Link>
                   </MenuItem>
                 ))}
               </Menu>
@@ -109,7 +117,7 @@ function Header() {
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "lato, sans-serif",
+              // fontFamily: "lato, sans-serif",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
@@ -118,33 +126,38 @@ function Header() {
           >
             MEOW UI
           </Typography>
-          {isSignedIn && isLoaded ? (
-            <>
-              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                {pages.map((page) => (
-                  <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{
-                      my: 2,
-                      color: "white",
-                      display: "block",
-                      fontFamily: "lato, sans-serif",
-                      fontSize: "1rem",
-                    }}
-                  >
-                    {page}
-                  </Button>
-                ))}
-              </Box>
-              <Box sx={{ flexGrow: 0 }}>
-                <UserButton afterSignOutUrl="/" />
-              </Box>
-            </>
-          ) : null}
+
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pages.map((page) => (
+              <Link
+                key={page}
+                href={userId ? `/${page.toLowerCase()}` : "/"}
+                style={{ textDecoration: "none" }}
+              >
+                <Button
+                  key={page}
+                  sx={{
+                    my: 2,
+                    color: "black",
+                    display: "block",
+                    // fontFamily: "lato, sans-serif",
+                    fontSize: "1rem",
+                    hover: {
+                      color: "black",
+                    },
+                  }}
+                >
+                  {page}
+                </Button>
+              </Link>
+            ))}
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <UserButton afterSignOutUrl="/" />
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+};
 export default Header;

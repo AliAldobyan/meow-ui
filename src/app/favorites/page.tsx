@@ -38,7 +38,7 @@ const Favorites = () => {
       <Container maxWidth="md" sx={{ flexGrow: 1, marginTop: "30px" }}>
         <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
           {userFavourites.map((item) => (
-            <ImageListItem key={item.image_id}>
+            <ImageListItem key={item?.image_id}>
               <img
                 srcSet={`${item.image.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 src={`${item.image.url}?w=164&h=164&fit=crop&auto=format`}

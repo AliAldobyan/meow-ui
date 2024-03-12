@@ -43,7 +43,7 @@ The following technologies were used in this project:
 
 ## Deployment
 
-This project is deployed on Vercel. You can access the live application [here](https://meow-ui.vercel.app/).
+The project will be deployed on Vercel.
 
 
 ## License

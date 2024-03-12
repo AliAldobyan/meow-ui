@@ -34,12 +34,15 @@ const Voting = () => {
   }
 
   const handleFav = () => {
-    dispatch(
-      setFavourite({
-        image_id: randomImg[0]?.id,
-        sub_id: userId ?? "",
-      })
-    );
+    if (randomImg.length > 0 && randomImg[0]?.url) {
+      // Check if randomImg is not empty and has url property
+      dispatch(
+        setFavourite({
+          image_id: randomImg[0]?.id,
+          sub_id: userId ?? "",
+        })
+      );
+    }
     dispatch(fetchRandomImg());
   };
 
@@ -47,7 +50,13 @@ const Voting = () => {
     <Container maxWidth="sm" sx={{ flexGrow: 1, marginTop: "30px" }}>
       <h2>Vote for your favorite cat breed</h2>
       <Card sx={{ maxWidth: 470 }}>
-        <CardMedia sx={{ height: 500 }} image={randomImg[0]?.url} title="cat" />
+        {randomImg.length > 0 && (
+          <CardMedia
+            sx={{ height: 500 }}
+            image={randomImg[0]?.url}
+            title="cat"
+          />
+        )}
 
         <CardActions sx={{ justifyContent: "space-between" }}>
           <IconButton aria-label="favorite" size="large" onClick={handleFav}>

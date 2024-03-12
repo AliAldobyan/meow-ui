@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../instance";
 
 type FavouritesState = {
-  userFavourites: [];
+  userFavourites: [] | any[];
   sub_id: string;
   status: string;
   error: null | string;
 };
 
 const initialState: FavouritesState = {
-  userFavourites: [],
+  userFavourites: [] as any[],
   sub_id: "",
   status: "idle",
   error: null,

@@ -9,17 +9,18 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import Loader from "@/components/Loader/loader";
 import BreedDetails from "./breedDetails";
-import { UserButton, useAuth } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 
-const page = () => {
+const Page = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   useEffect(() => {
     dispatch(fetchBreeds());
-  }, []);
+  }, [dispatch]);
 
-  const dispatch = useDispatch<AppDispatch>();
   const breedId = useAppSelector((state) => state.breedDetails.breed_id);
   const [selectedBreed, setSelectedBreed] = useState<string>(
     breedId ? breedId : ""
@@ -36,26 +37,23 @@ const page = () => {
   return (
     <>
       <Container maxWidth="md" sx={{ flexGrow: 1, marginTop: "30px" }}>
-        {/* <Typography variant="h6" align="center" gutterBottom>
-          Select a Breed to see information about it
-        </Typography> */}
-
         <h1> Select a Breed to see information about it</h1>
-
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth>
             <InputLabel id="breed-select-label">Breed</InputLabel>
             <Select
               labelId="breed-select-label"
               id="breed-select"
-              value={selectedBreed} // Assign a non-empty expression to the 'value' attribute
+              value={selectedBreed}
               label="Breed"
               onChange={(e: SelectChangeEvent) =>
-                setSelectedBreed(e.target.value)
+                setSelectedBreed(e.target.value as string)
               }
             >
               {breeds?.map((breed: { id: string; name: string }) => (
-                <MenuItem value={breed?.id}>{breed?.name}</MenuItem>
+                <MenuItem key={breed.id} value={breed.id}>
+                  {breed.name}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -71,4 +69,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

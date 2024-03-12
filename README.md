@@ -21,16 +21,35 @@ Meow UI is a web application built using Next.js with TypeScript. It allows user
     git clone https://github.com/AliAldobyan/meow-ui
     ```
 
+2. Create a `.env.local` file in the root directory of the project and add the following environment variables:
 
-## Usage
-
-1. Start the development server:
-
-    ```bash
-    npm run dev
+    ```plaintext
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=YOUR_CLERK_PUBLISHABLE_KEY
+    CLERK_SECRET_KEY=YOUR_CLERK_SECRET_KEY
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+    NEXT_PUBLIC_API_KEY=YOUR_CAT_API_KEY
     ```
 
-2. Open your browser and navigate to `http://localhost:3000`.
+    
+## Usage
+
+1. Install the dependencies:
+
+        ```bash
+        npm install
+        ```
+
+
+2. Start the development server:
+
+        ```bash
+        npm run dev
+        ```
+
+3. Open your browser and navigate to `http://localhost:3000`.
 
 ## Technologies
 
@@ -49,3 +68,4 @@ The project will be deployed on Vercel.
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+

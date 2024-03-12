@@ -1,37 +1,33 @@
 "use client";
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { useAuth } from "@clerk/nextjs";
 import { useAppSelector } from "@/redux/store";
 import { fetchRandomImg } from "@/redux/features/randomImgSlice";
-import { vote } from "@/redux/features/voteSlice";
 import { setFavourite } from "@/redux/features/favouritesSlice";
 import {
   Container,
   Card,
   CardActions,
-  CardContent,
   CardMedia,
   IconButton,
-  Typography,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import Loader from "@/components/Loader/loader";
 
-const voting = () => {
-  useEffect(() => {
-    dispatch(fetchRandomImg());
-  }, []);
-
+const Voting = () => {
   const { userId } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
-  const loadingVote = useAppSelector((state) => state.vote.status);
 
-  const randomImg = useAppSelector((state) => state.randomImg.randomImg);
+  useEffect(() => {
+    dispatch(fetchRandomImg());
+  }, [dispatch]);
+
   const loading = useAppSelector((state) => state.randomImg.status);
+  const randomImg = useAppSelector((state) => state.randomImg.randomImg);
 
   if (loading === "loading") {
     return <Loader />;
@@ -54,11 +50,10 @@ const voting = () => {
         <CardMedia sx={{ height: 500 }} image={randomImg[0]?.url} title="cat" />
 
         <CardActions sx={{ justifyContent: "space-between" }}>
-          <CardActions>
-            <IconButton aria-label="favorite" size="large" onClick={handleFav}>
-              <FavoriteBorderIcon />
-            </IconButton>
-          </CardActions>
+          <IconButton aria-label="favorite" size="large" onClick={handleFav}>
+            <FavoriteBorderIcon />
+          </IconButton>
+
           <CardActions>
             <IconButton size="large">
               <ThumbUpOffAltIcon />
@@ -73,4 +68,4 @@ const voting = () => {
   );
 };
 
-export default voting;
+export default Voting;

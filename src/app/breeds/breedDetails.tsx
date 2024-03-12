@@ -48,11 +48,6 @@ const BreedDetails = ({
     breedId = breedinfo[0].id;
     breedCountry = breedinfo[0].origin;
     breedWiki = breedinfo[0].wikipedia_url;
-    console.log(breedinfo[0]);
-    // console.log(
-    //   "breedinfo",
-    //   breedinfo?.map((info) => console.log(info))
-    // );
   }
 
   const loading = useAppSelector((state) => state.breedDetails.status);

@@ -1,21 +1,24 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { useAuth } from "@clerk/nextjs";
 import { useAppSelector } from "@/redux/store";
 import { fetchUserFavourites } from "@/redux/features/userFavouiteSlice";
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Loader from "@/components/Loader/loader";
 
-const favorites = () => {
-  React.useEffect(() => {
-    dispatch(fetchUserFavourites(userId ?? ""));
-  }, []);
+const Favorites = () => {
   const { userId } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchUserFavourites(userId));
+    }
+  }, [dispatch, userId]);
 
   const loading = useAppSelector((state) => state.userFavourites.status);
   const userFavourites = useAppSelector(
@@ -30,7 +33,6 @@ const favorites = () => {
     <>
       <Container maxWidth="sm" sx={{ flexGrow: 1, marginTop: "30px" }}>
         <h1>Your Favorite Pictures </h1>
-
         <Box sx={{ minWidth: 120 }}></Box>
       </Container>
       <Container maxWidth="md" sx={{ flexGrow: 1, marginTop: "30px" }}>
@@ -51,4 +53,4 @@ const favorites = () => {
   );
 };
 
-export default favorites;
+export default Favorites;

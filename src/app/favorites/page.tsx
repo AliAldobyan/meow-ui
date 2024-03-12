@@ -11,11 +11,12 @@ import ImageListItem from "@mui/material/ImageListItem";
 import Loader from "@/components/Loader/loader";
 
 const favorites = () => {
-  const { userId } = useAuth();
-  const dispatch = useDispatch<AppDispatch>();
   React.useEffect(() => {
     dispatch(fetchUserFavourites(userId ?? ""));
   }, []);
+  const { userId } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
+
   const loading = useAppSelector((state) => state.userFavourites.status);
   const userFavourites = useAppSelector(
     (state) => state.userFavourites.userFavourites

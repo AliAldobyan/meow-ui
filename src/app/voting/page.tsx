@@ -22,13 +22,13 @@ import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import Loader from "@/components/Loader/loader";
 
 const voting = () => {
-  const { userId } = useAuth();
-  const dispatch = useDispatch<AppDispatch>();
-  const loadingVote = useAppSelector((state) => state.vote.status);
-
   useEffect(() => {
     dispatch(fetchRandomImg());
   }, []);
+
+  const { userId } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
+  const loadingVote = useAppSelector((state) => state.vote.status);
 
   const randomImg = useAppSelector((state) => state.randomImg.randomImg);
   const loading = useAppSelector((state) => state.randomImg.status);

@@ -15,17 +15,17 @@ import BreedDetails from "./breedDetails";
 import { UserButton, useAuth } from "@clerk/nextjs";
 
 const page = () => {
+  useEffect(() => {
+    dispatch(fetchBreeds());
+  }, []);
+
   const dispatch = useDispatch<AppDispatch>();
   const breedId = useAppSelector((state) => state.breedDetails.breed_id);
-
   const [selectedBreed, setSelectedBreed] = useState<string>(
     breedId ? breedId : ""
   );
   const { userId } = useAuth();
 
-  useEffect(() => {
-    dispatch(fetchBreeds());
-  }, []);
   const breeds = useAppSelector((state) => state.breeds.breeds);
   const loading = useAppSelector((state) => state.breeds.status);
 

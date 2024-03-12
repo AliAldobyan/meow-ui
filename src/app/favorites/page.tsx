@@ -29,6 +29,7 @@ const Favorites = () => {
     return <Loader />;
   }
 
+  console.log(userFavourites.map((item) => console.log(item)));
   return (
     <>
       <Container maxWidth="sm" sx={{ flexGrow: 1, marginTop: "30px" }}>
@@ -37,16 +38,17 @@ const Favorites = () => {
       </Container>
       <Container maxWidth="md" sx={{ flexGrow: 1, marginTop: "30px" }}>
         <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-          {userFavourites.map((item) => (
-            <ImageListItem key={item?.image_id as string}>
-              <img
-                srcSet={`${item?.image.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                src={`${item?.image.url}?w=164&h=164&fit=crop&auto=format`}
-                alt="cat"
-                loading="lazy"
-              />
-            </ImageListItem>
-          ))}
+          {userFavourites.length > 0 &&
+            userFavourites.map((item) => (
+              <ImageListItem key={item?.image?.id}>
+                <img
+                  srcSet={`${item?.image?.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                  src={`${item?.image?.url}?w=164&h=164&fit=crop&auto=format`}
+                  alt="cat"
+                  loading="lazy"
+                />
+              </ImageListItem>
+            ))}
         </ImageList>
       </Container>
     </>

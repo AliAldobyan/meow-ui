@@ -62,7 +62,7 @@ The following technologies were used in this project:
 
 ## Deployment
 
-The project will be deployed on Vercel.
+The project is deployed on Netlify. You can access the deployed app at [https://main--famous-cheesecake-6f0f21.netlify.app/](https://main--famous-cheesecake-6f0f21.netlify.app/).
 
 
 ## License

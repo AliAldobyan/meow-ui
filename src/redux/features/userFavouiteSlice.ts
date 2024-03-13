@@ -3,27 +3,21 @@ import instance from "../instance";
 
 type FavouritesState = {
   userFavourites: [] | any[];
-  sub_id: string;
   status: string;
   error: null | string;
 };
 
 const initialState: FavouritesState = {
   userFavourites: [] as any[],
-  sub_id: "",
   status: "idle",
   error: null,
 };
 
 export const fetchUserFavourites = createAsyncThunk(
   "favourites/fetchFavourites",
-  async (sub_id: string) => {
+  async ({ user_id }: { user_id: string }) => {
     try {
-      const res = await instance.get("/favourites/", {
-        params: {
-          sub_id: sub_id,
-        },
-      });
+      const res = await instance.get(`/favourites?sub_id=${user_id}`);
 
       return res.data;
     } catch (error) {

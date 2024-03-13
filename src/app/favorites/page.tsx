@@ -16,7 +16,7 @@ const Favorites = () => {
 
   useEffect(() => {
     if (userId) {
-      dispatch(fetchUserFavourites(userId));
+      dispatch(fetchUserFavourites({ user_id: userId }));
     }
   }, [dispatch, userId]);
 

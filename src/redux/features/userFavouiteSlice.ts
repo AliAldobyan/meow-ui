@@ -17,7 +17,7 @@ export const fetchUserFavourites = createAsyncThunk(
   "favourites/fetchFavourites",
   async ({ user_id }: { user_id: string }) => {
     try {
-      const res = await instance.get(`/favourites?sub_id=${user_id}`);
+      const res = await instance.get(`/favourites`);
 
       return res.data;
     } catch (error) {

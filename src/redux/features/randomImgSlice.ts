@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../instance";
 
 type RandomImgState = {
-  randomImg: [];
+  randomImg: [] | any[];
   status: string;
   error: null | string;
 };

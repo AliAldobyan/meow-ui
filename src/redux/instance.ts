@@ -6,5 +6,6 @@ const instance = axios.create({
     "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
   },
 });
-
 export default instance;
+
+instance.defaults.headers.common["x-api-key"] = process.env.NEXT_PUBLIC_API_KEY;
